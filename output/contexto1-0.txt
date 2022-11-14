@@ -1,0 +1,3 @@
+****** Contexto 1-0 ******
+FUNCION: Nombre: main, Tipo: int, Inicializada: True, Usada: False
+FUNCION: Nombre: sumar, Tipo: int, Inicializada: True, Usada: False

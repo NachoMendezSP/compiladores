@@ -1,0 +1,5 @@
+****** Contexto 2-0 ******
+VARIABLE: Nombre: a, Tipo: int, Inicializada: True, Usada: False
+VARIABLE: Nombre: b, Tipo: int, Inicializada: True, Usada: False
+FUNCION: Nombre: main, Tipo: int, Inicializada: True, Usada: False
+FUNCION: Nombre: sumar, Tipo: int, Inicializada: True, Usada: False

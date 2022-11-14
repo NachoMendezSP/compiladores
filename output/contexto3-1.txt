@@ -1,0 +1,4 @@
+****** Contexto 3-1 ******
+VARIABLE: Nombre: a, Tipo: int, Inicializada: True, Usada: True
+VARIABLE: Nombre: b, Tipo: int, Inicializada: True, Usada: True
+VARIABLE: Nombre: r, Tipo: int, Inicializada: True, Usada: False
