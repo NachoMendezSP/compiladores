@@ -157,8 +157,9 @@ parametros: parametro COMA parametros | parametro;
 asignables: asignable COMA asignables | asignable;
 
 firma: (acceso |) tipo_retorno ID PA (parametros)* PC;
+firma_prototipo: (acceso |) tipo_retorno ID PA (parametros)* PC;
 
-prototipo_funcion: firma PYC;
+prototipo_funcion: firma_prototipo PYC;
 
 declaracion_funcion: firma bloque_funcion;
 

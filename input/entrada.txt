@@ -1,28 +1,30 @@
-int sumar (int a, int b);
+int suma (int, int);
 
-int main (int arg) {
-    int y;
-    int x = 5;
-    int p;
-    int a = 1;
-    int l;
-
-    y = sumar(x, 10);
-
-    {
-        int a = 5;
-        int b = a + x;
-    }
-
-    if (y == 14) {
-        x = 2 * x;
-        y = x + 2;
-    }
-    
-    return 0;
+int suma(int k1, int k2){
+  int b = (k1+k2);
+  return b;
 }
 
-int sumar (int a, int b) {
-    int r = a + b;
-    return r;
+int resta(int x1, int x2){
+  int c = (x1+x2);
+  return c;
+}
+
+int main(int arg, int argv){
+
+  int a;
+  int b;
+  int c;
+
+  a = 2;
+
+  b = resta(a, c);
+
+  c = a + b;
+
+  if (a > b){
+    int z;
+    z++;
+  }
+  return 0;
 }

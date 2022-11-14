@@ -1,3 +1,4 @@
-****** Contexto 1-0 ******
+Contexto: 1-0
+FUNCION: Nombre: suma, Tipo: int, Inicializada: True, Usada: False
+FUNCION: Nombre: resta, Tipo: int, Inicializada: True, Usada: False
 FUNCION: Nombre: main, Tipo: int, Inicializada: True, Usada: False
-FUNCION: Nombre: sumar, Tipo: int, Inicializada: True, Usada: False

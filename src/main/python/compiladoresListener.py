@@ -287,6 +287,15 @@ class compiladoresListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by compiladoresParser#firma_prototipo.
+    def enterFirma_prototipo(self, ctx:compiladoresParser.Firma_prototipoContext):
+        pass
+
+    # Exit a parse tree produced by compiladoresParser#firma_prototipo.
+    def exitFirma_prototipo(self, ctx:compiladoresParser.Firma_prototipoContext):
+        pass
+
+
     # Enter a parse tree produced by compiladoresParser#prototipo_funcion.
     def enterPrototipo_funcion(self, ctx:compiladoresParser.Prototipo_funcionContext):
         pass

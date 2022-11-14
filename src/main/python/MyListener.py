@@ -94,7 +94,7 @@ class MyListener(ParseTreeListener):
             else:
                 print(var_id, "No existe.")
 
-    # Exit a parse tree produced by compiladoresParser#firma_funcion_decl.
+    # Exit a parse tree produced by compiladoresParser#firma.
     def exitFirma(self, ctx:compiladoresParser.FirmaContext):
         fun_id = ctx.ID().getText()
         acceso = ctx.acceso().getText() if ctx.acceso() != None else ''
@@ -113,7 +113,6 @@ class MyListener(ParseTreeListener):
 
         self.tabla.addID(Funcion(fun_id, tipo, True, False, parametros))
 
-        # Contexto Nuevo
         print("Contexto de funcion")
         self.tabla.addContexto()
         for par in parametros:

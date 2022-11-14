@@ -1,4 +1,6 @@
-****** Contexto 2-2 ******
+Contexto: 2-2
+VARIABLE: Nombre: arg, Tipo: int, Inicializada: True, Usada: False
+VARIABLE: Nombre: argv, Tipo: int, Inicializada: True, Usada: False
 VARIABLE: Nombre: a, Tipo: int, Inicializada: True, Usada: True
 VARIABLE: Nombre: b, Tipo: int, Inicializada: True, Usada: True
-VARIABLE: Nombre: r, Tipo: int, Inicializada: True, Usada: False
+VARIABLE: Nombre: c, Tipo: int, Inicializada: True, Usada: True

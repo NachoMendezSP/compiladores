@@ -1,6 +1,5 @@
 class Tabla():
 
-    # Singleton
     class __Tabla:
         def __init__(self):
             self.ts = []
@@ -15,14 +14,13 @@ class Tabla():
 
         def addID(self, ID):
             self.ts[-1].update({ID.nombre: ID})
-            # self.ts[-1][ID.nombre] = ID
 
         def addContexto(self):
             print("Contexto nuevo.")
             self.ts.append(dict())
 
         def delContexto(self):
-            print("Fin contexto.")
+            print("Fin del contexto.")
             del self.ts[-1]
 
     instance = None

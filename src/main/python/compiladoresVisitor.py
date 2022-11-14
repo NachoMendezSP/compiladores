@@ -164,6 +164,11 @@ class compiladoresVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by compiladoresParser#firma_prototipo.
+    def visitFirma_prototipo(self, ctx:compiladoresParser.Firma_prototipoContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by compiladoresParser#prototipo_funcion.
     def visitPrototipo_funcion(self, ctx:compiladoresParser.Prototipo_funcionContext):
         return self.visitChildren(ctx)
