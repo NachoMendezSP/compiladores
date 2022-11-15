@@ -1,4 +1,4 @@
-# Generated from /home/nacho/Downloads/compiladores/src/main/python/compiladores.g4 by ANTLR 4.9.2
+# Generated from /home/nacho/Downloads/DHS-Mendez/compiladores/src/main/python/compiladores.g4 by ANTLR 4.9.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .compiladoresParser import compiladoresParser
@@ -29,8 +29,8 @@ class compiladoresVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by compiladoresParser#estructuras_comp.
-    def visitEstructuras_comp(self, ctx:compiladoresParser.Estructuras_compContext):
+    # Visit a parse tree produced by compiladoresParser#estructuras_control.
+    def visitEstructuras_control(self, ctx:compiladoresParser.Estructuras_controlContext):
         return self.visitChildren(ctx)
 
 

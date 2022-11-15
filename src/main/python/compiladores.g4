@@ -48,24 +48,28 @@ tipo_dato: INT | DOUBLE | CHAR | BOOL;
 
 ID: (LETRA | '_') ((LETRA | DIGITO | '_'))*;
 
+/* INICIO */
 
-/**** INICIO ****/
 programa: lineas;
 
 lineas: instruccion lineas | | EOF;
 
-instruccion: estructuras_comp 
+instruccion: 
+	estructuras_control 
 	| funcion 
 	| variable PYC 
 	| bloque;
 
-estructuras_comp:
+estructuras_control:
 	estructuras (
-		estructuras_comp
+		estructuras_control
 		| funcion
 		| variable PYC
 		| bloque_alt
 	);
+
+/* Distintos bloques para controlar mejor con 
+redundancia los contextos en el listener */
 
 bloque: LA lineas LC;
 bloque_alt: LA lineas LC;
@@ -156,6 +160,9 @@ parametro: tipo_dato ID | tipo_dato;
 parametros: parametro COMA parametros | parametro;
 asignables: asignable COMA asignables | asignable;
 
+/* Dos firmas distintas, ya que el listener solo creara contexto 
+con la firma de funcion, no de prototipos */
+
 firma: (acceso |) tipo_retorno ID PA (parametros)* PC;
 firma_prototipo: (acceso |) tipo_retorno ID PA (parametros)* PC;
 
@@ -165,4 +172,4 @@ declaracion_funcion: firma bloque_funcion;
 
 llamada_funcion: ID PA (asignables)* PC;
 
-retorno: RETURN asignable PYC;
+retorno: RETURN asignable PYC | RETURN PYC;

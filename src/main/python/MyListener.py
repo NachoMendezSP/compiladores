@@ -18,6 +18,10 @@ class MyListener(ParseTreeListener):
     tabla = Tabla()
     impresora = Printer()
 
+
+
+#Contexto global, desde el inicio hasta el final del programa.
+
     # Enter a parse tree produced by compiladoresParser#programa.
     def enterPrograma(self, ctx:compiladoresParser.ProgramaContext):
         print("Start")
@@ -29,16 +33,20 @@ class MyListener(ParseTreeListener):
         self.tabla.delContexto()
         print("End")
 
-    # Enter a parse tree produced by compiladoresParser#estructuras_comp.
-    def enterEstructuras_comp(self, ctx:compiladoresParser.Estructuras_compContext):
+#Se agrega contexto en los bloques que siguen a if, for, while.
+
+    # Enter a parse tree produced by compiladoresParser#estructuras_control.
+    def enterEstructuras_control(self, ctx:compiladoresParser.Estructuras_controlContext):
         print("Inicio estructura control")
         self.tabla.addContexto()
 
-    # Exit a parse tree produced by compiladoresParser#estructuras_comp.
-    def exitEstructuras_comp(self, ctx:compiladoresParser.Estructuras_compContext):
+    # Exit a parse tree produced by compiladoresParser#estructuras_control.
+    def exitEstructuras_control(self, ctx:compiladoresParser.Estructuras_controlContext):
         self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
         self.tabla.delContexto()
         print("Fin estructura control")
+
+#Se agrega contexto al entrar a un bloque.
 
     # Enter a parse tree produced by compiladoresParser#bloque.
     def enterBloque(self, ctx:compiladoresParser.BloqueContext):
@@ -51,20 +59,22 @@ class MyListener(ParseTreeListener):
         self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
         self.tabla.delContexto()
 
+#Se agregan variables a la Tabla de Simbolos.
+
     # Exit a parse tree produced by compiladoresParser#asignacion.
     def exitAsignacion(self, ctx:compiladoresParser.AsignacionContext):
         var_id = ctx.ID().getText()
-        asigna = ctx.IGUAL() != None or ctx.UMAS() != None or ctx.UMENOS() != None
-        var = Variable(var_id, '', asigna, False)
+        asignacion = ctx.IGUAL() != None or ctx.UMAS() != None or ctx.UMENOS() != None
+        var = Variable(var_id, '', asignacion, False)
         try:
             tipo_dato = ctx.parentCtx.tipo_dato().getText()
-            var = Variable(var_id, tipo_dato, asigna, False)
+            var = Variable(var_id, tipo_dato, asignacion, False)
             self.tabla.addID(var)
         except:
             if self.tabla.buscarID(var):
                 for d in self.tabla.ts[::-1]:
                     if var_id in d:
-                        d[var_id].inicializada = asigna
+                        d[var_id].inicializada = asignacion
                         d[var_id].usada = True
                         break
             else:
@@ -74,7 +84,7 @@ class MyListener(ParseTreeListener):
     def exitFactor(self, ctx:compiladoresParser.FactorContext):
         if ctx.ID() != None:
             var_id = ctx.ID().getText()
-            var = Variable(var_id, 'whatever', False, False)
+            var = Variable(var_id, 'x', False, False)
             if self.tabla.buscarID(var):
                 for d in self.tabla.ts[::-1]:
                     if var_id in d:
@@ -82,8 +92,6 @@ class MyListener(ParseTreeListener):
                         break
             else:
                 print(var_id, "No existe.")
-
-   
 
     # Exit a parse tree produced by compiladoresParser#lista_asignables.
     def exitAsignables(self, ctx:compiladoresParser.AsignablesContext):
@@ -94,12 +102,13 @@ class MyListener(ParseTreeListener):
             else:
                 print(var_id, "No existe.")
 
+#Se agrega un contexto al declarar una funcion seguida de bloque.
+
     # Exit a parse tree produced by compiladoresParser#firma.
     def exitFirma(self, ctx:compiladoresParser.FirmaContext):
         fun_id = ctx.ID().getText()
         acceso = ctx.acceso().getText() if ctx.acceso() != None else ''
-        tipo = (acceso + ' ' if acceso !=
-                '' else '') + ctx.tipo_retorno().getText()
+        tipo = (acceso + ' ' if acceso != '' else '') + ctx.tipo_retorno().getText()
 
         parametros = []
         lista_actual = ctx.parametros()[0]

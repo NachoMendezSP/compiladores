@@ -1,4 +1,4 @@
-# Generated from /home/nacho/Downloads/compiladores/src/main/python/compiladores.g4 by ANTLR 4.9.2
+# Generated from /home/nacho/Downloads/DHS-Mendez/compiladores/src/main/python/compiladores.g4 by ANTLR 4.9.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .compiladoresParser import compiladoresParser
@@ -44,12 +44,12 @@ class compiladoresListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by compiladoresParser#estructuras_comp.
-    def enterEstructuras_comp(self, ctx:compiladoresParser.Estructuras_compContext):
+    # Enter a parse tree produced by compiladoresParser#estructuras_control.
+    def enterEstructuras_control(self, ctx:compiladoresParser.Estructuras_controlContext):
         pass
 
-    # Exit a parse tree produced by compiladoresParser#estructuras_comp.
-    def exitEstructuras_comp(self, ctx:compiladoresParser.Estructuras_compContext):
+    # Exit a parse tree produced by compiladoresParser#estructuras_control.
+    def exitEstructuras_control(self, ctx:compiladoresParser.Estructuras_controlContext):
         pass
 
 

@@ -17,7 +17,7 @@ class Printer():
 
         index_full = str(index) + "-" + str(self.subcontextos[index])
 
-        #Genera un archivo para cada contexto y subcontexto.
+        #Genera un archivo de texto para cada contexto y subcontexto.
         archivo = open("output/contexto" + index_full + ".txt", mode="w+", encoding="utf-8")
         archivo.write("Contexto: " + index_full + "\n")
         for clave in contexto:
