@@ -6,6 +6,8 @@ fragment DIGITO: [0-9];
 WS: [ \t\n\r] -> skip;
 
 ENTERO: DIGITO+;
+DECIMAL: DIGITO+ '.' DIGITO+;
+CHARACTER: '\'' LETRA '\'';
 
 PYC: ';';
 COMA: ',';
@@ -79,6 +81,8 @@ estructuras: iwhile | iif | ifor;
 asignable:
 	ID
 	| ENTERO
+	| DECIMAL
+	| CHARACTER
 	| booleanos
 	| expresion
 	| llamada_funcion;
@@ -123,7 +127,7 @@ termino:
 	| termino DIV factor
 	| termino MOD factor
 	| factor;
-factor: PA expresion PC | ID | ENTERO | booleanos;
+factor: PA expresion PC | ID | ENTERO | DECIMAL | CHARACTER | booleanos;
 
 /* Estructuras de control */
 /* if */

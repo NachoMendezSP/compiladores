@@ -1,6 +1,3 @@
-# MyListener.py
-
-# Generated from /home/nacho/Downloads/compiladores/src/main/python/compiladores.g4 by ANTLR 4.9.2
 from sys import modules
 from antlr4 import *
 from models.Tabla import *

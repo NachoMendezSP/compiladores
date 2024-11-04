@@ -27,26 +27,24 @@ def main(argv):
     stream = CommonTokenStream(lexer)
     parser = compiladoresParser(stream)
 
-    # Configura el listener de errores de sintaxis y ejecuta el parser
+    # Configuro el listener de errores de sintaxis y ejecuta el parser
     syntax_error_listener = SyntaxErrorListener()
     parser.removeErrorListeners()
     parser.addErrorListener(syntax_error_listener)
 
-    # Ejecuta el parser solo para detectar errores de sintaxis
     parser.programa()
 
-    # Si hubo errores de sintaxis, detener el análisis y mostrar el reporte
+    # Si hubo errores de sintaxis, detengo el análisis y muestro el reporte
     if syntax_error_listener.hay_error:
         print("Análisis detenido debido a errores de sintaxis.")
         return
 
     # Si no hubo errores de sintaxis, realizar el análisis semántico con MyListener
-    parser.reset()  # Reinicia el parser para la segunda pasada
+    parser.reset()
     tree = parser.programa()
     miListener = MyListener()
     ParseTreeWalker().walk(miListener, tree)
 
-    # Verifica si hay errores semánticos
     if miListener.errores:
         print("Errores semánticos detectados:")
         for error in miListener.errores:
