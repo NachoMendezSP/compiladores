@@ -1,25 +1,26 @@
 from models.ID import *
 
-class Printer():
-
-    subcontextos = {}
-
+class Printer:
     def __init__(self):
-        pass
+        # Abrir un solo archivo para toda la salida de la tabla de símbolos
+        self.archivo = open("output/tabla_de_simbolos.txt", mode="w", encoding="utf-8")
+        self.archivo.write("Tabla de Símbolos:\n\n")
+        self.subcontextos = {}
 
     def lectura(self, contexto, index):
-        print("Index:", index)
-        print(contexto)
         if index in self.subcontextos:
             self.subcontextos[index] += 1
         else:
             self.subcontextos[index] = 0
 
-        index_full = str(index) + "-" + str(self.subcontextos[index])
+        index_full = f"{index}-{self.subcontextos[index]}"
+        self.archivo.write(f"Contexto: {index_full}\n")
 
-        #Genera un archivo de texto para cada contexto y subcontexto.
-        archivo = open("output/contexto" + index_full + ".txt", mode="w+", encoding="utf-8")
-        archivo.write("Contexto: " + index_full + "\n")
+        # Escribir cada entrada de contexto en el archivo único
         for clave in contexto:
-            archivo.write(str(contexto[clave]))
-            archivo.write("\n")
+            self.archivo.write(f"{str(contexto[clave])}\n")
+        self.archivo.write("\n")  # Agrega una línea en blanco entre contextos para mejor legibilidad
+
+    def cerrar(self):
+        # Cerrar el archivo al finalizar
+        self.archivo.close()

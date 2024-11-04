@@ -1,2 +1,0 @@
-Contexto: 3-0
-VARIABLE: Nombre: z, Tipo: int, Inicializada: True, Usada: True

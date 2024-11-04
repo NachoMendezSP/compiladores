@@ -1,4 +1,0 @@
-Contexto: 2-1
-VARIABLE: Nombre: x1, Tipo: int, Inicializada: True, Usada: True
-VARIABLE: Nombre: x2, Tipo: int, Inicializada: True, Usada: True
-VARIABLE: Nombre: c, Tipo: int, Inicializada: True, Usada: False

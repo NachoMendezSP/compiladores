@@ -1,3 +1,5 @@
+# MyListener.py
+
 # Generated from /home/nacho/Downloads/compiladores/src/main/python/compiladores.g4 by ANTLR 4.9.2
 from sys import modules
 from antlr4 import *
@@ -12,124 +14,105 @@ if __name__ is not None and "." in __name__:
 else:
     from compiladoresParser import compiladoresParser
 
-# This class defines a complete listener for a parse tree produced by compiladoresParser.
+# Esta clase define un listener completo para el árbol de parseo producido por compiladoresParser.
 class MyListener(ParseTreeListener):
 
-    tabla = Tabla()
-    impresora = Printer()
+    def __init__(self):
+        self.tabla = Tabla()
+        self.impresora = Printer()
+        self.errores = []
 
+    def registrar_error(self, mensaje):
+        self.errores.append(mensaje)
 
-
-#Contexto global, desde el inicio hasta el final del programa.
-
-    # Enter a parse tree produced by compiladoresParser#programa.
-    def enterPrograma(self, ctx:compiladoresParser.ProgramaContext):
+    def enterPrograma(self, ctx: compiladoresParser.ProgramaContext):
         print("Start")
         self.tabla.addContexto()
 
-    # Exit a parse tree produced by compiladoresParser#programa.
-    def exitPrograma(self, ctx:compiladoresParser.ProgramaContext):
-        self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
+    def exitPrograma(self, ctx: compiladoresParser.ProgramaContext):
+        # Solo generar tabla de símbolos si no hay errores
+        if not self.errores:
+            self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
         self.tabla.delContexto()
         print("End")
 
-#Se agrega contexto en los bloques que siguen a if, for, while.
-
-    # Enter a parse tree produced by compiladoresParser#estructuras_control.
-    def enterEstructuras_control(self, ctx:compiladoresParser.Estructuras_controlContext):
+    def enterEstructuras_control(self, ctx: compiladoresParser.Estructuras_controlContext):
         print("Inicio estructura control")
         self.tabla.addContexto()
 
-    # Exit a parse tree produced by compiladoresParser#estructuras_control.
-    def exitEstructuras_control(self, ctx:compiladoresParser.Estructuras_controlContext):
-        self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
+    def exitEstructuras_control(self, ctx: compiladoresParser.Estructuras_controlContext):
+        # Solo genera archivos de contexto si no hay errores
+        if not self.errores:
+            self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
         self.tabla.delContexto()
         print("Fin estructura control")
 
-#Se agrega contexto al entrar a un bloque.
-
-    # Enter a parse tree produced by compiladoresParser#bloque.
-    def enterBloque(self, ctx:compiladoresParser.BloqueContext):
+    def enterBloque(self, ctx: compiladoresParser.BloqueContext):
         print("Inicio bloque")
         self.tabla.addContexto()
 
-    # Exit a parse tree produced by compiladoresParser#bloque.
-    def exitBloque(self, ctx:compiladoresParser.BloqueContext):
-        print("Fin bloque")
-        self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
+    def exitBloque(self, ctx: compiladoresParser.BloqueContext):
+        # Solo genera archivos de contexto si no hay errores
+        if not self.errores:
+            self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
         self.tabla.delContexto()
+        print("Fin bloque")
 
-#Se agregan variables a la Tabla de Simbolos.
-
-    # Exit a parse tree produced by compiladoresParser#asignacion.
-    def exitAsignacion(self, ctx:compiladoresParser.AsignacionContext):
+    def exitAsignacion(self, ctx: compiladoresParser.AsignacionContext):
         var_id = ctx.ID().getText()
-        asignacion = ctx.IGUAL() != None or ctx.UMAS() != None or ctx.UMENOS() != None
+        asignacion = ctx.IGUAL() is not None or ctx.UMAS() is not None or ctx.UMENOS() is not None
         var = Variable(var_id, '', asignacion, False)
         try:
             tipo_dato = ctx.parentCtx.tipo_dato().getText()
             var = Variable(var_id, tipo_dato, asignacion, False)
-            self.tabla.addID(var)
-        except:
             if self.tabla.buscarID(var):
-                for d in self.tabla.ts[::-1]:
-                    if var_id in d:
-                        d[var_id].inicializada = asignacion
-                        d[var_id].usada = True
-                        break
+                self.registrar_error(f"Error semántico: Doble declaración de identificador '{var_id}'")
             else:
-                print(var_id, "No existe.")
+                self.tabla.addID(var)
+        except:
+            if not self.tabla.buscarID(var):
+                self.registrar_error(f"Error semántico: Uso de identificador no declarado '{var_id}'")
 
-    # Exit a parse tree produced by compiladoresParser#factor.
-    def exitFactor(self, ctx:compiladoresParser.FactorContext):
-        if ctx.ID() != None:
+    def exitFactor(self, ctx: compiladoresParser.FactorContext):
+        if ctx.ID() is not None:
             var_id = ctx.ID().getText()
             var = Variable(var_id, 'x', False, False)
-            if self.tabla.buscarID(var):
-                for d in self.tabla.ts[::-1]:
-                    if var_id in d:
-                        d[var_id].usada = True
-                        break
-            else:
-                print(var_id, "No existe.")
+            if not self.tabla.buscarID(var):
+                self.registrar_error(f"Error semántico: Uso de identificador no declarado '{var_id}'")
 
-    # Exit a parse tree produced by compiladoresParser#lista_asignables.
-    def exitAsignables(self, ctx:compiladoresParser.AsignablesContext):
-        if ctx.asignable().ID() != None:
+    def exitAsignables(self, ctx: compiladoresParser.AsignablesContext):
+        if ctx.asignable().ID() is not None:
             var_id = ctx.asignable().ID().getText()
-            if var_id in self.tabla.ts[-1]:
-                self.tabla.ts[-1][var_id].usada = True
-            else:
-                print(var_id, "No existe.")
+            if var_id not in self.tabla.ts[-1]:
+                self.registrar_error(f"Error semántico: Uso de identificador no declarado '{var_id}'")
 
-#Se agrega un contexto al declarar una funcion seguida de bloque.
-
-    # Exit a parse tree produced by compiladoresParser#firma.
-    def exitFirma(self, ctx:compiladoresParser.FirmaContext):
+    def exitFirma(self, ctx: compiladoresParser.FirmaContext):
         fun_id = ctx.ID().getText()
-        acceso = ctx.acceso().getText() if ctx.acceso() != None else ''
+        acceso = ctx.acceso().getText() if ctx.acceso() is not None else ''
         tipo = (acceso + ' ' if acceso != '' else '') + ctx.tipo_retorno().getText()
 
         parametros = []
         lista_actual = ctx.parametros()[0]
-        while(lista_actual != None):
+        while lista_actual is not None:
             par_id = lista_actual.parametro().ID().getText()
             par_tipo = lista_actual.parametro().tipo_dato().getText()
             par = Variable(par_id, par_tipo, True, False)
-
             parametros.append(par)
             lista_actual = lista_actual.parametros()
 
-        self.tabla.addID(Funcion(fun_id, tipo, True, False, parametros))
+        if self.tabla.buscarID(Funcion(fun_id, tipo, True, False, parametros)):
+            self.registrar_error(f"Error semántico: Doble declaración de función '{fun_id}'")
+        else:
+            self.tabla.addID(Funcion(fun_id, tipo, True, False, parametros))
+            print("Contexto de funcion")
+            self.tabla.addContexto()
+            for par in parametros:
+                self.tabla.addID(par)
 
-        print("Contexto de funcion")
-        self.tabla.addContexto()
-        for par in parametros:
-            self.tabla.addID(par)
-
-    # Exit a parse tree produced by compiladoresParser#declaracion_funcion.
-    def exitDeclaracion_funcion(self, ctx:compiladoresParser.Declaracion_funcionContext):
-        self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
+    def exitDeclaracion_funcion(self, ctx: compiladoresParser.Declaracion_funcionContext):
+        # Solo genera archivos de contexto si no hay errores
+        if not self.errores:
+            self.impresora.lectura(self.tabla.ts[-1], len(self.tabla.ts))
         self.tabla.delContexto()
         print("Fin contexto de funcion")
 
