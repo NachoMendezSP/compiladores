@@ -1,7 +1,8 @@
 int suma (int, int);
 
 int suma(int k1, int k2){
-  return (k1+k2);
+  int res = (k1+k2);
+  return res;
 }
 
 int resta(int x1, int x2){
@@ -24,12 +25,13 @@ int main(int arg, char argv){
 
   c = a + b;
   
-  if (a > b || a < c && c >= b){
+  if (a > b || (a < c && c >= b)){
     int z = 0;
     int test = 4;
-    test = test +1;
     z = z +1;
   }
+  if(a<b)
+    a++;
 
   return 0;
 }

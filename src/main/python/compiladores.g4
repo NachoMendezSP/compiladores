@@ -147,7 +147,7 @@ ifor:
 
 /* Definición de opal y operaciones lógicas */
 
-comparacion: opal;
+comparacion: opal | PA opal PC;
 opal: lor;
 lor: land lorp;
 lorp: OR land lorp | ;

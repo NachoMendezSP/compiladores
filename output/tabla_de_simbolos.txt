@@ -3,18 +3,18 @@ Tabla de Símbolos:
 Contexto: 2-0
 VARIABLE: Nombre: k1, Tipo: int, Inicializada: True, Usada: True
 VARIABLE: Nombre: k2, Tipo: int, Inicializada: True, Usada: True
-VARIABLE: Nombre: res, Tipo: int, Inicializada: True, Usada: False
 
 Contexto: 2-1
 VARIABLE: Nombre: x1, Tipo: int, Inicializada: True, Usada: True
 VARIABLE: Nombre: x2, Tipo: int, Inicializada: True, Usada: True
-VARIABLE: Nombre: ans, Tipo: int, Inicializada: True, Usada: False
+VARIABLE: Nombre: ans, Tipo: int, Inicializada: True, Usada: True
 
 Contexto: 3-0
 VARIABLE: Nombre: a, Tipo: double, Inicializada: True, Usada: True
 VARIABLE: Nombre: b, Tipo: int, Inicializada: True, Usada: True
 VARIABLE: Nombre: c, Tipo: int, Inicializada: True, Usada: True
 VARIABLE: Nombre: z, Tipo: int, Inicializada: True, Usada: True
+VARIABLE: Nombre: test, Tipo: int, Inicializada: True, Usada: True
 
 Contexto: 2-2
 VARIABLE: Nombre: arg, Tipo: int, Inicializada: True, Usada: False
@@ -23,6 +23,7 @@ VARIABLE: Nombre: a, Tipo: double, Inicializada: True, Usada: True
 VARIABLE: Nombre: b, Tipo: int, Inicializada: True, Usada: True
 VARIABLE: Nombre: c, Tipo: int, Inicializada: True, Usada: True
 VARIABLE: Nombre: x, Tipo: int, Inicializada: False, Usada: False
+VARIABLE: Nombre: test, Tipo: int, Inicializada: True, Usada: False
 FUNCION: Nombre: suma, Tipo: int, Inicializada: True, Usada: True
 FUNCION: Nombre: resta, Tipo: int, Inicializada: True, Usada: True
 

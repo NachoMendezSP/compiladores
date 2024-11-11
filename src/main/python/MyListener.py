@@ -39,7 +39,7 @@ class MyListener(ParseTreeListener):
                 self.tabla.addID(main_func)
 
             # Emitir advertencias para funciones y variables no usadas o no inicializadas en todos los contextos
-            for contexto in self.tabla.ts:  # Recorre todos los contextos, no solo el global
+            for contexto in self.tabla.ts:
                 for simbolo in contexto.values():
                     if isinstance(simbolo, Variable):
                         if not simbolo.usada:
@@ -81,7 +81,7 @@ class MyListener(ParseTreeListener):
         self.emitir_advertencias_contexto()  # Verificar antes de eliminar contexto
         self.tabla.delContexto()
         print("Fin bloque")
-
+    
     def exitAsignacion(self, ctx: compiladoresParser.AsignacionContext):
         var_id = ctx.ID().getText()
         # Buscar primero en el contexto local
@@ -137,12 +137,12 @@ class MyListener(ParseTreeListener):
                     if tipo_var == 'int' and tipo_asignable == 'double':
                         self.registrar_error(f"Error semántico: Asignación incompatible de 'double' a 'int' para la variable '{var_id}'")
                     elif tipo_var == 'double' and tipo_asignable == 'int':
-                        self.registrar_advertencia(f"Advertencia: Asignación de 'int' a 'double' para la variable '{var_id}' puede perder precisión")
+                        self.registrar_advertencia(f"Advertencia: Asignación de 'int' a 'double' para la variable '{var_id}'") #Probablemente remover
 
             # Marcar como inicializada si es una asignación
             if ctx.IGUAL() is not None or ctx.UMAS() is not None or ctx.UMENOS() is not None:
                 var.inicializada = True
-            self.tabla.addID(var)  # Actualiza la tabla
+            self.tabla.addID(var)
 
     def exitComp(self, ctx: compiladoresParser.CompContext):
         for asignable_ctx in ctx.asignable():
@@ -153,7 +153,7 @@ class MyListener(ParseTreeListener):
                     if not var.inicializada:
                         self.registrar_error(f"Error semántico: Uso de identificador no inicializado '{var_id}' en línea {ctx.start.line}")
                     var.usada = True
-                    self.tabla.addID(var)  # Marcar como usada
+                    self.tabla.addID(var)
                 else:
                     self.registrar_error(f"Error semántico: Uso de identificador no declarado '{var_id}' en línea {ctx.start.line}")
 
@@ -219,6 +219,15 @@ class MyListener(ParseTreeListener):
             self.tabla.addID(funcion)
         else:
             self.registrar_error(f"Error semántico: Llamada a función no declarada '{fun_id}'")
+    
+    def exitRetorno(self, ctx: compiladoresParser.RetornoContext):
+        if ctx.asignable() is not None:
+            var_id = ctx.asignable().ID().getText() if ctx.asignable().ID() else None
+            if var_id:
+                var = self.tabla.buscarID(Variable(var_id, '', False, False))
+                if var:
+                    var.usada = True
+                    self.tabla.addID(var)
 
     def emitir_advertencias_contexto(self):
         # Verificar variables no usadas o no inicializadas en el contexto actual
