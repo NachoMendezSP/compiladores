@@ -13,6 +13,11 @@ Problemas conocidos:
     Ejemplo: int a, b; 
     b es tomada como variable no declarada, por lo que salta como error semántico.
 
-- No tira error semántico al asignar valores de tipo incorrecto. Ya agregué a la gramática algunas reglas para implementarlo más adelante, pero removí la lógica en el Listener al no funcionar correctamente todavía.
+- Optimizar reglas de la gramática:
+    - Si agrego un ; de más en algunos casos es tomado como válido en el árbol sintáctico, pero no debería ser correcto.
+    - Agregar algunos paréntesis opcionales en casos como opal.
 
-- Optimizar reglas de la gramática (ejemplo: si agrego un ; de más en algunos casos es tomado como válido en el árbol sintáctico, pero no debería ser correcto).
+- Problemas con el contexto local en algunos casos.
+
+- No reconoce si una variable de una funcion ha sido usada o no.
+

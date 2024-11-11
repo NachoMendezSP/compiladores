@@ -42,6 +42,7 @@ def main(argv):
     # Si no hubo errores de sintaxis, realizar el análisis semántico con MyListener
     parser.reset()
     tree = parser.programa()
+    #miListener = MyListener()
     miListener = MyListener()
     ParseTreeWalker().walk(miListener, tree)
 

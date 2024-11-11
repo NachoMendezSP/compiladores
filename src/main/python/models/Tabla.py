@@ -7,12 +7,16 @@ class Tabla():
         def buscarID(self, ID):
             for d in self.ts[::-1]:
                 if ID.nombre in d:
-                    return True
+                    print(f"Encontrado {ID.nombre} en la tabla de símbolos")
+                    return d[ID.nombre]
+            print(f"No encontrado {ID.nombre} en la tabla de símbolos")
+            return None
 
         def buscarIDlocal(self, ID):
-            return ID.nombre in self.ts[-1]
+            return self.ts[-1].get(ID.nombre)
 
         def addID(self, ID):
+            print(f"Agregando a la tabla de símbolos: {ID.nombre} con tipo {ID.tipo}, inicializada: {ID.inicializada}, usada: {ID.usada}")
             self.ts[-1].update({ID.nombre: ID})
 
         def addContexto(self):

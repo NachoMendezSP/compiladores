@@ -110,8 +110,6 @@ relacion:
 	| AND
 	| OR;
 
-comparacion: asignable relacion asignable;
-
 booleanos: TRUE | FALSE;
 
 /* Jerarquía aritmética */
@@ -146,6 +144,16 @@ iwhile:
 /* for */
 ifor:
 	FOR PA (variable |) PYC (comparacion | booleanos |) PYC (asignacion	|) PC;
+
+/* Definición de opal y operaciones lógicas */
+
+comparacion: opal;
+opal: lor;
+lor: land lorp;
+lorp: OR land lorp | ;
+land: comp landp;
+landp: AND comp landp | ;
+comp: asignable relacion asignable | asignable;
 
 /* Funciones */
 
